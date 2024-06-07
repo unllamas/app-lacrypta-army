@@ -41,6 +41,7 @@ import Animations from '@/components/Animations';
 import BitcoinTrade from '@/components/Animations/bitcoin-trade.json';
 import ButtonCTA from '@/components/ButtonCTA';
 import Navbar from '@/components/Layout/Navbar';
+import Subnavbar from '@/components/Layout/Subnavbar';
 import { TokenList } from '@/components/TokenList';
 import TransactionItem from '@/components/TransactionItem';
 
@@ -113,11 +114,11 @@ export default function Page() {
                 <Icon size="small">{hideBalance ? <HiddenIcon /> : <VisibleIcon />}</Icon>
               </Button>
             )}
-            <Button variant="bezeled" size="small" onClick={() => router.push('/settings')}>
+            {/* <Button variant="bezeled" size="small" onClick={() => router.push('/settings')}>
               <Icon size="small">
                 <GearIcon />
               </Icon>
-            </Button>
+            </Button> */}
           </Flex>
         </Navbar>
 
@@ -246,6 +247,8 @@ export default function Page() {
           </Button>
         </ButtonCTA>
       )}
+
+      <Subnavbar path="dashboard" />
     </>
   );
 }

@@ -14,9 +14,9 @@ export function Textarea(props: TextareaProps) {
       disabled={disabled}
       id={id}
       name={name}
-      placeholder={placeholder}
       value={value}
       onChange={onChange}
+      {...props}
     />
   );
 }

@@ -29,6 +29,14 @@ const nextConfig = {
   env: {
     version,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
 };
 
 module.exports = withNextIntl(withSerwist(nextConfig));

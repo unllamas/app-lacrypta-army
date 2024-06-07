@@ -15,3 +15,7 @@ export * from './Check';
 export * from './Alert';
 export * from './ArrowRight';
 export * from './SafariLogo';
+export * from './Wallet';
+export * from './Bell';
+export * from './Hearth';
+export * from './Report';

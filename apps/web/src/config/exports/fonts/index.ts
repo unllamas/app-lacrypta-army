@@ -4,9 +4,14 @@ const fontPrimary = localFont({
   variable: '--font-primary',
   src: [
     {
-      path: './assets/IAAB3.woff2',
+      path: './assets/Blatant.woff',
       weight: '400',
       style: 'normal',
+    },
+    {
+      path: './assets/Blatant-Bold.woff',
+      weight: '700',
+      style: 'bold',
     },
   ],
 });
@@ -15,12 +20,12 @@ const fontSecondary = localFont({
   variable: '--font-secondary',
   src: [
     {
-      path: './assets/SF-Regular.woff2',
+      path: './assets/Standerd.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: './assets/SF-Bold.woff2',
+      path: './assets/Standerd-Bold.woff2',
       weight: '700',
       style: 'bold',
     },

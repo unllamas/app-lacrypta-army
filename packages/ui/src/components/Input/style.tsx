@@ -25,13 +25,14 @@ export const InputPrimitive = styled.input<InputPrimitiveProps>`
 
   color: ${(props) => props.theme.colors.text};
   font-size: 0.8em;
+  font-family: ${(props) => props.theme.font.secondary};
 
   outline: none;
 
   transition-duration: 0.3s;
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.gray30};
+    color: ${(props) => props.theme.colors.gray50};
   }
 
   &:not(:disabled) {
@@ -153,6 +154,7 @@ export const TextareaPrimitive = styled.textarea<InputPrimitiveProps>`
 
   color: ${(props) => props.theme.colors.text};
   font-size: 0.8em;
+  font-family: ${(props) => props.theme.font.secondary};
 
   outline: none;
   resize: none;
@@ -160,7 +162,7 @@ export const TextareaPrimitive = styled.textarea<InputPrimitiveProps>`
   transition-duration: 0.3s;
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.gray30};
+    color: ${(props) => props.theme.colors.gray50};
   }
 
   &:hover {

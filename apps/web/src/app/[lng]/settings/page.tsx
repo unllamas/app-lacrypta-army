@@ -25,6 +25,7 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 import { useRouter } from '@/navigation';
 import { startTransition, useState } from 'react';
 import { AvailableLanguages } from '@lawallet/react/types';
+import Subnavbar from '@/components/Layout/Subnavbar';
 
 export default function Page() {
   const config = useConfig();
@@ -66,7 +67,7 @@ export default function Page() {
 
   return (
     <>
-      <Navbar showBackPage={true} title={t('SETTINGS')} overrideBack="/dashboard" />
+      <Navbar title={t('SETTINGS')} overrideBack="/dashboard" />
 
       <Container size="small">
         <Divider y={16} />
@@ -123,11 +124,11 @@ export default function Page() {
         </Flex>
         <Divider y={16} />
 
-        <Flex flex={1} align="center" justify="center">
+        {/* <Flex flex={1} align="center" justify="center">
           <Feedback show={errors.errorInfo.visible} status={'error'}>
             {errors.errorInfo.text}
           </Feedback>
-        </Flex>
+        </Flex> */}
 
         <Divider y={16} />
 
@@ -136,7 +137,6 @@ export default function Page() {
             {t('LOGOUT')}
           </Button>
         </Flex>
-        <Divider y={16} />
       </Container>
 
       <Sheet
@@ -165,6 +165,10 @@ export default function Page() {
           </Flex>
         </Container>
       </Sheet>
+
+      <Divider y={120} />
+
+      <Subnavbar path="settings" />
     </>
   );
 }
