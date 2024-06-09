@@ -18,6 +18,7 @@ export function TokenList() {
             return (
               <Button
                 key={currency}
+                color="primary"
                 variant={selected ? 'bezeled' : 'borderless'}
                 size="small"
                 onClick={() => settings.changeCurrency(currency)}
