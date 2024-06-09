@@ -5,9 +5,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'styled-components';
-import { formatToPreference, normalizeLNDomain, useConfig, useWalletContext } from '@lawallet/react';
 import {
-  Avatar,
+  formatToPreference,
+  normalizeLNDomain,
+  useConfig,
+  useNostrContext,
+  useSubscription,
+  useWalletContext,
+} from '@lawallet/react';
+import {
   AvatarImage,
   BannerAlert,
   BtnLoader,
@@ -23,6 +29,7 @@ import {
   ReportIcon,
   HearthIcon,
   Textarea,
+  ActionSheet,
 } from '@lawallet/ui';
 import {
   GearIcon,
@@ -51,13 +58,26 @@ import { TokenList } from '@/components/TokenList';
 import TransactionItem from '@/components/TransactionItem';
 import Logo from '@/components/Logo';
 import { PostImage } from '@/components/PostImage';
-import { CloseIcon, EllipsisIcon, ImageIcon } from '@/components/Icons';
-import { ModalResponsive, ModalHeader, ModalBody, ModalFooter } from '@/components/UI';
+import { BoltIcon, CloseIcon, EllipsisIcon, ImageIcon } from '@/components/Icons';
+import { Avatar } from '@/components/Avatar';
+import {
+  ModalResponsive,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from '@/components/UI';
 
 // Constans
 import { CACHE_BACKUP_KEY, EMERGENCY_LOCK_DEPOSIT, EMERGENCY_LOCK_TRANSFER } from '@/constants/constants';
 import { PreviewImage } from '@/components/PreviewImage';
 import { useDisclosure } from '@/hooks/useDisclosure';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
+import FormatPost from './components/FormatPost';
 
 export default function Page() {
   const config = useConfig();
@@ -135,110 +155,173 @@ export default function Page() {
     },
   ];
 
+  const [tab, setTab] = useState('for-you');
+
+  // Test Nostr
+  const { signerInfo } = useNostrContext({ config });
+  const pubkey = signerInfo?.pubkey || '';
+
+  const [nostrEvents, setNostrEvents] = useState<NDKEvent[]>([]);
+
+  // const handleGetProfile = (pubKey) => {
+  //   const { events } = useSubscription({
+  //     filters: [{ kinds: [0], authors: [pubKey] }],
+  //     options: { closeOnEose: false },
+  //     enabled: false,
+  //   });
+
+  //   return events;
+  // };
+
+  // const handleGetPost = (pubKey) => {
+  //   const { events } = useSubscription({
+  //     filters: [{ kinds: [1], authors: ['cee287bb0990a8ecbd1dee7ee7f938200908a5c8aa804b3bdeaed88effb55547'] }],
+  //     options: { closeOnEose: false },
+  //     enabled: true,
+  //   });
+
+  //   return events;
+  // };
+
+  const pubKey = 'cee287bb0990a8ecbd1dee7ee7f938200908a5c8aa804b3bdeaed88effb55547';
+
+  const { events } = useSubscription({
+    filters: [{ kinds: [0, 1], authors: [pubKey] }],
+    options: { closeOnEose: false },
+    enabled: true,
+  });
+
+  const loadNostrEvents = () => {
+    const deduplicated = Object.values(Object.fromEntries(events.map((event) => [event.id, event as NDKEvent])));
+
+    setNostrEvents(deduplicated.sort((a, b) => b.created_at! - a.created_at!));
+  };
+
+  const getProfile = (pubKey) => {
+    const data = events?.find((event) => event.kind === 0 && event.pubkey === pubKey);
+    // const parse = JSON.parse(data?.content || '');
+
+    // return {
+    //   name: parse?.displayName || parse?.display_name || '',
+    //   email: parse?.lud16 || '',
+    //   avatar: parse?.picture || '',
+    // };
+
+    return {
+      name: 'Jona',
+      email: '',
+      avatar: '',
+    };
+  };
+
+  const getReply = (note) => {};
+
+  useEffect(() => {
+    if (events.length) {
+      loadNostrEvents();
+      // getProfile(pubKey);
+    }
+  }, [events]);
+
+  // const findPubkeyInTags = (tags, pubkey) => {
+  //   return tags.some((tag) => tag[0] === 'p' && tag[1] === pubkey);
+  // };
+
   return (
     <>
-      <Navbar>
+      {/* <Navbar>
         <Flex align="center" justify="center" gap={8}>
           <Logo size="sm" />
         </Flex>
-      </Navbar>
+      </Navbar> */}
 
-      <Container>
-        {publications.map((post, index) => (
-          <div key={index} style={{ borderBottom: '1px solid #333' }}>
-            <Divider y={16} />
-            <Flex gap={8}>
-              <Avatar>
-                <Text size="small">{'DI'}</Text>
-              </Avatar>
-              <Flex direction="column" gap={8}>
-                {/* Info user */}
-                <Flex justify="space-between" align="center">
-                  <Flex direction="column">
-                    <Flex align="center" gap={4}>
-                      <Text isBold>{post.name}</Text>
-                    </Flex>
-                    <Text size="small" color={theme.colors.gray50}>
-                      {post.lud16}
-                    </Text>
-                  </Flex>
-                  <Flex gap={8} flex={0} align="center">
-                    <Text size="small" color={theme.colors.gray50}>
-                      10m
-                    </Text>
-                    {/* <Text size="small" color={theme.colors.gray50}>
-                      •
-                    </Text>
-                    <Button size="small" variant="bezeledGray">
-                      <Icon>
-                        <EllipsisIcon />
-                      </Icon>
-                    </Button> */}
-                  </Flex>
-                </Flex>
-                <Flex direction="column" gap={8}>
-                  <Text>{post.description}</Text>
-                  {post?.meta?.image_url && <PostImage src={post.meta.image_url} />}
-                  <Flex gap={8} justify="space-between">
-                    {/* TO-DO */}
-                    <Button size="small" variant={index % 2 ? 'bezeledGray' : 'borderless'}>
-                      <Icon size="small">
-                        <HearthIcon color={index % 2 ? theme.colors.primary : theme.colors.text} />
-                      </Icon>
-                    </Button>
-                  </Flex>
-                </Flex>
-              </Flex>
+      <Tabs>
+        <TabList>
+          <Tab active={tab === 'for-you'} isBlock onClick={() => setTab('for-you')}>
+            Para ti
+          </Tab>
+          {/* <Tab active={tab === 'following'} isBlock onClick={() => setTab('following')}>
+            Siguiendo
+          </Tab> */}
+        </TabList>
+        <TabPanels>
+          <TabPanel show={tab === 'for-you'}>
+            <Flex direction="column" align="center">
+              {nostrEvents.map((event, index) => {
+                if (!event || event.kind !== 1) return null;
+                // const hasReply = event?.tags?.length === 0 ? false : findPubkeyInTags(event?.tags, pubkey);
+                return (
+                  <div key={index} style={{ width: '100%', borderBottom: '1px solid #333' }}>
+                    <Container>
+                      <Divider y={16} />
+                      <Flex gap={8}>
+                        <Avatar size={10} alt={getProfile(event.pubkey).name} src={getProfile(event.pubkey).avatar} />
+                        <Flex direction="column" gap={8}>
+                          {/* Info user */}
+                          <Flex justify="space-between" align="center">
+                            <Flex direction="column">
+                              <Flex align="center" gap={4}>
+                                <Text isBold>{getProfile(event.pubkey).name}</Text>
+                              </Flex>
+                              <Text size="small" color={theme.colors.gray50}>
+                                {getProfile(event.pubkey).email}
+                              </Text>
+                            </Flex>
+                            <Flex gap={8} align="center" justify="end">
+                              <Text size="small" color={theme.colors.gray50}>
+                                Hace 10m
+                              </Text>
+                              {/* <Button size="small" variant="borderless">
+                              <Icon>
+                                <EllipsisIcon color={theme.colors.text} />
+                              </Icon>
+                            </Button> */}
+                            </Flex>
+                          </Flex>
+                          <Flex direction="column" gap={8}>
+                            <FormatPost content={event.content} />
+                            {/* {post?.meta?.image_url && <PostImage src={post.meta.image_url} />} */}
+                            <Flex gap={4} justify="space-between">
+                              {/* TO-DO */}
+                              {/* <Button size="small" variant={index % 2 ? 'bezeledGray' : 'borderless'}>
+                              <Icon size="small">
+                                <HearthIcon color={index % 2 ? theme.colors.primary : theme.colors.text} />
+                              </Icon>
+                            </Button> */}
+                              {/* <Flex align="center" gap={4}>
+                                <Button size="small" variant={index % 2 ? 'bezeled' : 'bezeledGray'}>
+                                  <Icon size="small">
+                                    <BoltIcon color={index % 2 ? theme.colors.primary : theme.colors.text} />
+                                  </Icon>
+                                </Button>
+                                <Text size="small" color={appTheme.colors.gray50}>
+                                  250 SATs
+                                </Text>
+                              </Flex> */}
+                            </Flex>
+                          </Flex>
+                        </Flex>
+                      </Flex>
+                      <Divider y={16} />
+                    </Container>
+                  </div>
+                );
+              })}
             </Flex>
-            <Divider y={16} />
-          </div>
-        ))}
-      </Container>
+          </TabPanel>
+          <TabPanel show={tab === 'following'}>
+            <Container>siguiendo...</Container>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
 
-      <Divider y={120} />
+      {/* <ActionSheet title="algo" description="hola?" cancelText="cerrar" isOpen={false} onClose={() => null}>
+        <Button variant="bezeledGray">Copiar link del post</Button>
+        <Button variant="bezeledGray">Silenciar</Button>
+        <Button variant="bezeledGray">Denunciar publicacion</Button>
+      </ActionSheet> */}
 
-      <ModalResponsive isOpen={isOpen} onClose={onClose}>
-        <ModalHeader>
-          <Text isBold>Nueva publicacion</Text>
-        </ModalHeader>
-        <ModalBody>
-          <Flex gap={8}>
-            <Avatar>
-              <Text size="small">{'DI'}</Text>
-            </Avatar>
-            <Flex direction="column" gap={8}>
-              <Textarea placeholder="¿Qué estás pensando?" />
-              <PreviewImage>
-                <PostImage src="https://cdn.discordapp.com/attachments/1151562522265141329/1248064199872221296/image.png?ex=6662f69d&is=6661a51d&hm=02f28ea592c7cbbe75cfd2266bdb2f4081ff40b5fa0e18f595cc846d82873861&" />
-                <Button size="small" variant="bezeledGray">
-                  <Icon>
-                    <CloseIcon />
-                  </Icon>
-                </Button>
-              </PreviewImage>
-            </Flex>
-          </Flex>
-        </ModalBody>
-        <ModalFooter>
-          <div>
-            <Button size="small" variant="bezeledGray">
-              <Icon>
-                <ImageIcon />
-              </Icon>
-            </Button>
-          </div>
-          <Flex gap={4} justify="end">
-            <Button size="small" variant="borderless" onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button size="small" disabled>
-              Publicar
-            </Button>
-          </Flex>
-        </ModalFooter>
-      </ModalResponsive>
-
-      <Subnavbar path="home" onClick={onToggle} />
+      {/* <Subnavbar path="home" onClick={onToggle} /> */}
     </>
   );
 }
