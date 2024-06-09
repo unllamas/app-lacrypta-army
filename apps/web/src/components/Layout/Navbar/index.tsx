@@ -15,7 +15,7 @@ import { Navbar, BackButton, Left, Right, AlertSystemStyle } from './style';
 
 interface ComponentProps {
   children?: ReactNode;
-  title?: string;
+  title?: string | null;
   showBackPage?: boolean;
   overrideBack?: string;
 }
@@ -26,11 +26,11 @@ export default function Component(props: ComponentProps) {
   const router = useRouter();
   const t = useTranslations();
 
-  const onlyChildren = !children;
+  // const onlyChildren = !children;
 
   return (
     <Flex direction="column">
-      {(EMERGENCY_LOCK_DEPOSIT || EMERGENCY_LOCK_TRANSFER) && (
+      {/* {(EMERGENCY_LOCK_DEPOSIT || EMERGENCY_LOCK_TRANSFER) && (
         <AlertSystemStyle $background={appTheme.colors.error15}>
           <Container>
             <Flex flex={1} justify="center" align="center">
@@ -42,35 +42,36 @@ export default function Component(props: ComponentProps) {
             </Flex>
           </Container>
         </AlertSystemStyle>
-      )}
+      )} */}
       <Navbar>
         <Container>
           <Flex flex={1} align="center" gap={8}>
-            {onlyChildren && (
+            {showBackPage && (
               <Left>
-                {showBackPage && (
-                  <Button
-                    size="small"
-                    variant="bezeledGray"
-                    onClick={() => {
-                      overrideBack ? router.push(overrideBack) : router.back();
-                    }}
-                  >
-                    <Icon size="small">
-                      <CaretLeftIcon />
-                    </Icon>
-                  </Button>
-                )}
+                <Button
+                  size="small"
+                  variant="bezeledGray"
+                  onClick={() => {
+                    overrideBack ? router.push(overrideBack) : router.back();
+                  }}
+                >
+                  <Icon size="small">
+                    <CaretLeftIcon />
+                  </Icon>
+                </Button>
               </Left>
             )}
             {title ? (
-              <Flex justify="center">
-                <Text isBold>{title}</Text>
-              </Flex>
+              <>
+                <Flex justify="center">
+                  <Text isBold>{title}</Text>
+                </Flex>
+                <Right></Right>
+              </>
             ) : (
               children
             )}
-            {onlyChildren && <Right></Right>}
+            {/* {onlyChildren && <Right></Right>} */}
           </Flex>
         </Container>
       </Navbar>

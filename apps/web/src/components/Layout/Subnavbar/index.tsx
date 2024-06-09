@@ -2,10 +2,22 @@
 
 // Libraries
 import { ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useWalletContext } from '@lawallet/react';
-import { Button, Container, Icon, QrCodeIcon, Text, Flex, Avatar, GearIcon, WalletIcon, BellIcon } from '@lawallet/ui';
+import {
+  Button,
+  Container,
+  Icon,
+  QrCodeIcon,
+  Text,
+  Flex,
+  Avatar,
+  GearIcon,
+  WalletIcon,
+  BellIcon,
+  Textarea,
+} from '@lawallet/ui';
 import { HomeIcon, RocketIcon } from '@bitcoin-design/bitcoin-icons-react/filled';
 
 // Hooks
@@ -13,8 +25,10 @@ import { useDisclosure } from '@/hooks/useDisclosure';
 
 // Components
 import ButtonCTA from '@/components/ButtonCTA';
-import { PlusIcon } from '@/components/Icons';
-import { appTheme } from '@/config/exports';
+import { CloseIcon, ImageIcon, PlusIcon } from '@/components/Icons';
+import { PostImage } from '@/components/PostImage';
+import { PreviewImage } from '@/components/PreviewImage';
+import { ModalResponsive, ModalHeader, ModalBody, ModalFooter } from '@/components/UI';
 
 // Constants
 import { EMERGENCY_LOCK_TRANSFER } from '@/constants/constants';
@@ -32,10 +46,12 @@ interface ComponentProps {
 }
 
 export default function Subnavbar(props: ComponentProps) {
-  const { path = 'home', onClick } = props;
+  const { path, onClick } = props;
+
+  console.log('path', path);
 
   // Custom hooks
-  const { onToggle } = useDisclosure();
+  const { onToggle, onClose, isOpen } = useDisclosure();
 
   const {
     account: { balance },
@@ -45,59 +61,106 @@ export default function Subnavbar(props: ComponentProps) {
   const t = useTranslations();
 
   return (
-    <SubnavbarPrimitive>
-      <Container size="small">
-        <Flex gap={16} justify="center" align="end" flex={0}>
-          <Button
-            size="small"
-            variant={path === 'home' ? 'bezeled' : 'bezeledGray'}
-            onClick={() => router.push('/home')}
-          >
-            <Icon>
-              <HomeIcon />
-            </Icon>
-          </Button>
+    <>
+      <SubnavbarPrimitive>
+        <Container size="small">
+          <Flex gap={16} justify="center" align="end" flex={0}>
+            <Button
+              size="small"
+              variant="borderless"
+              color={path === '/home/' ? 'primary' : 'secondary'}
+              onClick={() => router.push('/home')}
+            >
+              <Icon>
+                <HomeIcon />
+              </Icon>
+            </Button>
 
-          <Button
-            size="small"
-            variant={path === 'plugins' ? 'bezeled' : 'bezeledGray'}
-            disabled={true}
-            // onClick={() => router.push('/dashboard')}
-          >
-            <Icon>
-              <BellIcon />
-            </Icon>
-          </Button>
+            <Button
+              size="small"
+              variant="borderless"
+              color={path === '/plugins/' ? 'primary' : 'secondary'}
+              disabled={true}
+              // onClick={() => router.push('/dashboard')}
+            >
+              <Icon>
+                <BellIcon />
+              </Icon>
+            </Button>
 
-          {!EMERGENCY_LOCK_TRANSFER && (
-            <ButtonCTA>
-              <Button onClick={onClick}>
-                <PlusIcon />
-              </Button>
-            </ButtonCTA>
-          )}
+            {!EMERGENCY_LOCK_TRANSFER && (
+              <ButtonCTA>
+                <Button onClick={onToggle} variant="bezeledGray">
+                  <PlusIcon />
+                </Button>
+              </ButtonCTA>
+            )}
 
-          <Button
-            size="small"
-            variant={path === 'dashboard' ? 'bezeled' : 'bezeledGray'}
-            onClick={() => router.push('/dashboard')}
-          >
-            <Icon>
-              <WalletIcon />
-            </Icon>
-          </Button>
+            <Button
+              size="small"
+              variant="borderless"
+              color={path === '/dashboard/' ? 'primary' : 'secondary'}
+              onClick={() => router.push('/dashboard')}
+            >
+              <Icon>
+                <WalletIcon />
+              </Icon>
+            </Button>
 
-          <Button
-            size="small"
-            variant={path === 'settings' ? 'bezeled' : 'bezeledGray'}
-            onClick={() => router.push('/settings')}
-          >
-            <Icon>
-              <GearIcon />
-            </Icon>
-          </Button>
-        </Flex>
-      </Container>
-    </SubnavbarPrimitive>
+            <Button
+              size="small"
+              variant="borderless"
+              color={path === '/settings/' ? 'primary' : 'secondary'}
+              onClick={() => router.push('/settings')}
+            >
+              <Icon>
+                <GearIcon />
+              </Icon>
+            </Button>
+          </Flex>
+        </Container>
+      </SubnavbarPrimitive>
+
+      <ModalResponsive isOpen={isOpen} onClose={onClose}>
+        <ModalHeader>
+          <Text isBold>Nueva publicacion</Text>
+        </ModalHeader>
+        <ModalBody>
+          <Flex gap={8}>
+            <Avatar>
+              <Text size="small">{'DI'}</Text>
+            </Avatar>
+            <Flex direction="column" gap={8}>
+              <Textarea placeholder="¿Qué estás pensando?" />
+              {/* <PreviewImage>
+                <PostImage src="https://assets.lawallet.app/cover.png" />
+                <Button size="small" variant="bezeledGray">
+                  <Icon>
+                    <CloseIcon />
+                  </Icon>
+                </Button>
+              </PreviewImage> */}
+            </Flex>
+          </Flex>
+        </ModalBody>
+        <ModalFooter>
+          {/* <div>
+            <Button size="small" variant="bezeledGray">
+              <Icon>
+                <ImageIcon />
+              </Icon>
+            </Button>
+          </div> */}
+          <Flex gap={4} justify="end">
+            <Button variant="bezeledGray" color="secondary" onClick={onClose}>
+              Cancelar
+            </Button>
+            <Button variant="bezeled" onClick={() => null}>
+              Publicar
+            </Button>
+          </Flex>
+        </ModalFooter>
+      </ModalResponsive>
+    </>
   );
 }
