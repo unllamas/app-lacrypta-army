@@ -81,49 +81,7 @@ export default function Page() {
   return (
     <>
       <HeroCard>
-        <Navbar>
-          <Flex align="center" gap={8}>
-            <Avatar>
-              <Text size="small">{identity.data.username ? extractFirstTwoChars(identity.data.username) : 'AN'}</Text>
-            </Avatar>
-            <Flex direction="column">
-              <Text size="small" color={appTheme.colors.gray50}>
-                {t('HELLO')},
-              </Text>
-              <Flex
-                onClick={() => {
-                  if (identity.data.username)
-                    copy(`${identity.data.username}@${normalizeLNDomain(config.endpoints.lightningDomain)}`);
-                }}
-              >
-                {loading ? (
-                  <Text> -- </Text>
-                ) : (
-                  <Text>
-                    {identity.data.username
-                      ? `${identity.data.username}@${normalizeLNDomain(config.endpoints.lightningDomain)}`
-                      : t('ANONYMOUS')}
-                  </Text>
-                )}
-              </Flex>
-            </Flex>
-          </Flex>
-          <Flex gap={4} justify="end">
-            {Number(balance.amount) > 0 && (
-              <Button variant="bezeled" size="small" onClick={toggleHideBalance}>
-                <Icon size="small">{hideBalance ? <HiddenIcon /> : <VisibleIcon />}</Icon>
-              </Button>
-            )}
-            {/* <Button variant="bezeled" size="small" onClick={() => router.push('/settings')}>
-              <Icon size="small">
-                <GearIcon />
-              </Icon>
-            </Button> */}
-          </Flex>
-        </Navbar>
-
         <Divider y={12} />
-
         <Flex direction="column" align="center" justify="center">
           <Text size="small" color={appTheme.colors.gray50}>
             {t('BALANCE')}
@@ -157,7 +115,12 @@ export default function Page() {
       <Container size="small">
         <Divider y={16} />
         <Flex gap={8}>
-          <Button onClick={() => router.push('/deposit')} disabled={EMERGENCY_LOCK_DEPOSIT}>
+          <Button
+            color="secondary"
+            variant="bezeled"
+            onClick={() => router.push('/deposit')}
+            disabled={EMERGENCY_LOCK_DEPOSIT}
+          >
             <Icon>
               <ReceiveIcon />
             </Icon>
@@ -165,7 +128,7 @@ export default function Page() {
           </Button>
           <Button
             onClick={() => router.push('/transfer')}
-            color="secondary"
+            color="primary"
             disabled={EMERGENCY_LOCK_TRANSFER || Number(balance.amount) === 0}
           >
             <Icon>
@@ -237,18 +200,7 @@ export default function Page() {
             </Flex>
           </>
         )}
-        <Divider y={64} />
       </Container>
-
-      {!EMERGENCY_LOCK_TRANSFER && Number(balance.amount) > 0 && (
-        <ButtonCTA>
-          <Button color="secondary" onClick={() => router.push('/scan')}>
-            <QrCodeIcon />
-          </Button>
-        </ButtonCTA>
-      )}
-
-      <Subnavbar path="dashboard" />
     </>
   );
 }

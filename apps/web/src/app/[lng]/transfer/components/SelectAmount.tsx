@@ -143,7 +143,7 @@ export const SelectTransferAmount = ({ transferInfo, setAmountToPay, setComment 
 
           <TokenList />
 
-          {transferInfo.request && (
+          {/* {transferInfo.request && (
             <Flex justify="center">
               <Feedback show={true} status={'success'}>
                 {t('SENDABLE_AMOUNT', {
@@ -152,7 +152,7 @@ export const SelectTransferAmount = ({ transferInfo, setAmountToPay, setComment 
                 })}
               </Feedback>
             </Flex>
-          )}
+          )} */}
         </Flex>
 
         <Feedback show={errors.errorInfo.visible} status={'error'}>
@@ -175,6 +175,7 @@ export const SelectTransferAmount = ({ transferInfo, setAmountToPay, setComment 
           </Flex>
           <Flex>
             <Button
+              variant="bezeled"
               onClick={handleClick}
               disabled={loading || balance.amount === 0 || numpadData.intAmount['SAT'] === 0}
               loading={loading}

@@ -60,7 +60,7 @@ export default function Page() {
 
   return (
     <>
-      <Navbar showBackPage={true} title={t('DEPOSIT')} />
+      {/* <Navbar showBackPage={true} title={t('DEPOSIT')} /> */}
 
       {identity.data.username.length ? (
         <>
@@ -93,6 +93,7 @@ export default function Page() {
                   <Button
                     size="small"
                     variant="bezeled"
+                    color="secondary"
                     onClick={() =>
                       handleCopy(
                         identity.data.username
@@ -123,7 +124,6 @@ export default function Page() {
                   {t('CREATE_INVOICE')}
                 </Button>
               </Flex>
-              <Divider y={32} />
             </Container>
           </Flex>
         </>

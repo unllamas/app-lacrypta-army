@@ -148,10 +148,9 @@ export default function Page() {
 
   return (
     <>
-      <Navbar showBackPage={true} title={t('TRANSFER_MONEY')} overrideBack="/dashboard" />
+      {/* <Navbar showBackPage={true} title={t('TRANSFER_MONEY')} overrideBack="/dashboard" /> */}
 
       <Container size="small">
-        <Divider y={16} />
         <Flex flex={1} direction="column">
           <InputGroup>
             <Autocomplete
@@ -216,17 +215,20 @@ export default function Page() {
 
       <Flex>
         <Container size="small">
-          <Divider y={16} />
           <Flex gap={8}>
-            <Button variant="bezeledGray" onClick={() => router.push('/dashboard')}>
+            <Button color="secondary" variant="bezeledGray" onClick={() => router.push('/dashboard')}>
               {t('CANCEL')}
             </Button>
 
-            <Button onClick={handleContinue} disabled={loading || inputText.length === 0} loading={loading}>
+            <Button
+              variant="bezeled"
+              onClick={handleContinue}
+              disabled={loading || inputText.length === 0}
+              loading={loading}
+            >
               {t('CONTINUE')}
             </Button>
           </Flex>
-          <Divider y={32} />
         </Container>
       </Flex>
     </>

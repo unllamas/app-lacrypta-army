@@ -37,11 +37,10 @@ export const FinishTransfer = ({ transferInfo }: { transferInfo: TransferInforma
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <Container size="small">
         <Confetti />
-        <Divider y={16} />
         <Heading>{t('FINISH_TRANSFER_TITLE')}</Heading>
         <Divider y={4} />
         <Text size="small">{transferInfo.type === TransferTypes.LNURLW ? t('SUCCESS_CLAIM') : t('TRANSFER_TO')}</Text>
@@ -87,11 +86,10 @@ export const FinishTransfer = ({ transferInfo }: { transferInfo: TransferInforma
         <Container size="small">
           <Divider y={16} />
           <Flex gap={8}>
-            <LinkButton variant="borderless" onClick={() => router.push('/dashboard')}>
+            <LinkButton variant="bezeledGray" onClick={() => router.push('/dashboard')}>
               {t('GO_HOME')}
             </LinkButton>
           </Flex>
-          <Divider y={32} />
         </Container>
       </Flex>
     </>

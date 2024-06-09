@@ -19,7 +19,7 @@ const TransferWithLNURL = () => {
 
   return (
     <>
-      <Navbar showBackPage={true} title={t('DEFINE_AMOUNT')} overrideBack={`/transfer`} />
+      {/* <Navbar showBackPage={true} title={t('DEFINE_AMOUNT')} overrideBack={`/transfer`} /> */}
 
       <SelectTransferAmount transferInfo={LNURLTransferInfo} setAmountToPay={setAmountToPay} setComment={setComment} />
     </>

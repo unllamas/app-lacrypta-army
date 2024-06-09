@@ -110,12 +110,11 @@ export const Summary = ({
         <Container size="small">
           <Divider y={16} />
           <Flex gap={8}>
-            <LinkButton variant="bezeledGray" onClick={() => router.push('/dashboard')}>
+            <Button color="secondary" variant="bezeled" onClick={() => router.push('/dashboard')}>
               {t('CANCEL')}
-            </LinkButton>
+            </Button>
 
             <Button
-              color="secondary"
               onClick={onClick}
               disabled={
                 !type || isLoading || isPending || expired || (type !== TransferTypes.LNURLW && insufficientBalance)
@@ -125,7 +124,6 @@ export const Summary = ({
               {type === TransferTypes.LNURLW ? t('CLAIM') : t('TRANSFER')}
             </Button>
           </Flex>
-          <Divider y={32} />
         </Container>
       </Flex>
     </>

@@ -38,7 +38,7 @@ export default function Page() {
 
   return (
     <>
-      <Navbar showBackPage={true} title={t('ACTIVITY')} />
+      {/* <Navbar showBackPage={true} title={t('ACTIVITY')} /> */}
 
       <Container size="small">
         <InfiniteScroll
@@ -80,13 +80,11 @@ export default function Page() {
         </InfiniteScroll>
       </Container>
 
-      <Divider y={64} />
-
-      <Footer>
+      {/* <Footer>
         <Button variant="bezeledGray" onClick={() => router.push('/dashboard')}>
           {t('BACK')}
         </Button>
-      </Footer>
+      </Footer> */}
     </>
   );
 }

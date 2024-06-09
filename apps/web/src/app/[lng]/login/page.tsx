@@ -65,9 +65,11 @@ export default function Page() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
+      <Divider y={60} />
+
       <Container size="small">
-        <Flex direction="column" justify="center">
+        <Flex direction="column" flex={1}>
           <Heading as="h2">{t('LOGIN_TITLE')}</Heading>
 
           <Divider y={8} />

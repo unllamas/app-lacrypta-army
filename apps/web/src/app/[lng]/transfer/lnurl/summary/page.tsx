@@ -18,13 +18,13 @@ const page = () => {
     <>
       {isSuccess || isError ? (
         <>
-          <Navbar />
+          {/* <Navbar /> */}
 
           {isError ? <ErrorTransfer /> : <FinishTransfer transferInfo={LNURLTransferInfo} />}
         </>
       ) : (
         <>
-          <Navbar
+          {/* <Navbar
             showBackPage={true}
             title={t('VALIDATE_INFO')}
             overrideBack={
@@ -32,7 +32,7 @@ const page = () => {
                 ? `/transfer`
                 : `/transfer/lnurl?data=${LNURLTransferInfo.data}&amount=${LNURLTransferInfo.amount}${LNURLTransferInfo.comment ? `&comment=${LNURLTransferInfo.comment}` : ''}`
             }
-          />
+          /> */}
           <Summary
             isLoading={isLoading}
             isSuccess={isSuccess}

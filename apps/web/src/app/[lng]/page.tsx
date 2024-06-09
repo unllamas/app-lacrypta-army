@@ -14,7 +14,7 @@ export default function Page() {
   // const { handleCreateIdentity, loading } = useCreateIdentity()
   return (
     <Container size="small">
-      <Divider y={16} />
+      {/* <Divider y={16} /> */}
       <Flex direction="column" align="center" justify="center" gap={8} flex={1}>
         <Logo />
         <Text align="center" color={appTheme.colors.gray50}>

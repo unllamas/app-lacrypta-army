@@ -67,23 +67,21 @@ export default function Page() {
 
   return (
     <>
-      <Navbar title={t('SETTINGS')} overrideBack="/dashboard" />
+      {/* <Navbar title={t('SETTINGS')} overrideBack="/dashboard" /> */}
 
       <Container size="small">
-        <Divider y={16} />
         <Text size="small" color={appTheme.colors.gray50}>
           {t('ACCOUNT')}
         </Text>
-        <Divider y={8} />
+        {/* <Divider y={8} />
         <Flex direction="column" gap={4}>
           <LinkSetting onClick={() => router.push('/settings/cards')}>{t('MY_CARDS')}</LinkSetting>
-        </Flex>
+        </Flex> */}
         <Divider y={8} />
 
         <Flex direction="column" gap={4}>
           <ButtonSetting onClick={() => setSheetLanguage(!sheetLanguage)}>
             {t('LANGUAGE')}
-
             <Flex flex={1} align="end" justify="end">
               <Text isBold={true}>{lng.toUpperCase()}</Text>
             </Flex>
@@ -94,7 +92,7 @@ export default function Page() {
           </ButtonSetting>
         </Flex>
 
-        {Boolean(identity.data.privateKey.length) && (
+        {/* {Boolean(identity.data.privateKey.length) && (
           <>
             <Divider y={16} />
             <Text size="small" color={appTheme.colors.gray50}>
@@ -105,9 +103,9 @@ export default function Page() {
               <LinkSetting onClick={() => router.push('/settings/recovery')}>{t('BACKUP_ACCOUNT')}</LinkSetting>
             </Flex>
           </>
-        )}
+        )} */}
 
-        <Divider y={16} />
+        {/* <Divider y={16} />
         <Text size="small" color={appTheme.colors.gray50}>
           {t('ABOUT_US')}
         </Text>
@@ -115,11 +113,11 @@ export default function Page() {
         <Flex direction="column" gap={4}>
           <LinkSetting onClick={() => router.push('https://twitter.com/lawalletok')}>Twitter</LinkSetting>
           <LinkSetting onClick={() => router.push('https://discord.lacrypta.ar')}>Discord</LinkSetting>
-        </Flex>
+        </Flex> */}
         <Divider y={16} />
         <Flex justify="center">
           <Text size="small" color={appTheme.colors.gray50}>
-            LaWallet v{process.env.version}
+            LaCrypta.army v{process.env.version}
           </Text>
         </Flex>
         <Divider y={16} />
@@ -166,9 +164,7 @@ export default function Page() {
         </Container>
       </Sheet>
 
-      <Divider y={120} />
-
-      <Subnavbar path="settings" />
+      {/* <Subnavbar path="settings" /> */}
     </>
   );
 }
