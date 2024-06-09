@@ -6,7 +6,12 @@
     },
     "relaysList": [
         "wss://relay.damus.io",
-        "wss://relay.lawallet.ar"
+        "wss://relay.lawallet.ar",
+        "wss://cache2.primal.net/v1",
+        "wss://relay.snort.social/",
+        "wss://relay.nostr.band/",
+        "wss://hist.nostr.land/",
+        "wss://relay.primal.net/"
     ],
     "modulePubkeys": {
         "card": "18f6a706091b421bd9db1ec964b4f934007fb6997c60e3c500fdaebe5f9f7b18",
