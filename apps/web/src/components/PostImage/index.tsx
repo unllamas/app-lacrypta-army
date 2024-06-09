@@ -5,7 +5,7 @@ import { PostImageStyle } from './style';
 export const PostImage = (props) => {
   return (
     <PostImageStyle>
-      <img {...props} alt="" />
+      <img {...props} loading="lazy" alt="" />
     </PostImageStyle>
   );
 };
