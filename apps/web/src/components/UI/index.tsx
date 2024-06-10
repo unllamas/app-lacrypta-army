@@ -5,3 +5,4 @@ export { default as Keyboard } from './Keyboard';
 export { default as Confetti } from './Confetti';
 export { default as InfoCopy } from './InfoCopy';
 export * from './Tabs';
+export * from './Card';
