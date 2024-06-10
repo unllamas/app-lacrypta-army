@@ -21,29 +21,14 @@ import {
   ReceiveIcon,
   Text,
 } from '@lawallet/ui';
-import {
-  GearIcon,
-  HiddenIcon,
-  QrCodeIcon,
-  SatoshiV2Icon,
-  SendIcon,
-  VisibleIcon,
-} from '@bitcoin-design/bitcoin-icons-react/filled';
-
-// Theme
-// import { appTheme } from '@/config/exports';
+import { SatoshiV2Icon, SendIcon } from '@bitcoin-design/bitcoin-icons-react/filled';
 
 // Hooks and utils
-import { extractFirstTwoChars } from '@/utils';
-import { copy } from '@/utils/share';
 import { Link, useRouter } from '@/navigation';
 
 // Components
 import Animations from '@/components/Animations';
 import BitcoinTrade from '@/components/Animations/bitcoin-trade.json';
-import ButtonCTA from '@/components/ButtonCTA';
-import Navbar from '@/components/Layout/Navbar';
-import Subnavbar from '@/components/Layout/Subnavbar';
 import { TokenList } from '@/components/TokenList';
 import TransactionItem from '@/components/TransactionItem';
 
