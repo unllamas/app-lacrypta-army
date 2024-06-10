@@ -11,7 +11,9 @@
         "wss://relay.snort.social/",
         "wss://relay.nostr.band/",
         "wss://hist.nostr.land/",
-        "wss://relay.primal.net/"
+        "wss://relay.primal.net/",
+        "wss://relay.hodl.ar/",
+        "wss://nos.lol/"
     ],
     "modulePubkeys": {
         "card": "18f6a706091b421bd9db1ec964b4f934007fb6997c60e3c500fdaebe5f9f7b18",
