@@ -5,36 +5,22 @@ import { ReactNode } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useWalletContext } from '@lawallet/react';
-import {
-  Button,
-  Container,
-  Icon,
-  QrCodeIcon,
-  Text,
-  Flex,
-  Avatar,
-  GearIcon,
-  WalletIcon,
-  BellIcon,
-  Textarea,
-} from '@lawallet/ui';
-import { HomeIcon, RocketIcon } from '@bitcoin-design/bitcoin-icons-react/filled';
+import { Button, Container, Icon, Text, Flex, GearIcon, WalletIcon, BellIcon, Textarea, Divider } from '@lawallet/ui';
+import { HomeIcon } from '@bitcoin-design/bitcoin-icons-react/filled';
 
 // Hooks
 import { useDisclosure } from '@/hooks/useDisclosure';
 
 // Components
 import ButtonCTA from '@/components/ButtonCTA';
-import { CloseIcon, ImageIcon, PlusIcon } from '@/components/Icons';
-import { PostImage } from '@/components/PostImage';
-import { PreviewImage } from '@/components/PreviewImage';
+import { PlusIcon } from '@/components/Icons';
 import { ModalResponsive, ModalHeader, ModalBody, ModalFooter } from '@/components/UI';
-
-// Constants
-import { EMERGENCY_LOCK_TRANSFER } from '@/constants/constants';
 
 // Styles
 import { SubnavbarPrimitive } from './style';
+import useQuery from '@/hooks/useQuery';
+import { useTheme } from 'styled-components';
+import Logo from '@/components/Logo';
 
 interface ComponentProps {
   children?: ReactNode;
@@ -42,53 +28,56 @@ interface ComponentProps {
   showBackPage?: boolean;
   overrideBack?: string;
   path: string;
-  onClick?: any;
 }
 
 export default function Subnavbar(props: ComponentProps) {
-  const { path, onClick } = props;
-
-  console.log('path', path);
+  const { path } = props;
 
   // Custom hooks
   const { onToggle, onClose, isOpen } = useDisclosure();
-
-  const {
-    account: { balance },
-  } = useWalletContext();
+  const { device } = useQuery();
 
   const router = useRouter();
-  const t = useTranslations();
+  // const t = useTranslations();
+  const theme = useTheme();
 
   return (
-    <>
-      <SubnavbarPrimitive>
+    <Flex flex={1} direction="column">
+      <Divider y={12} />
+      <SubnavbarPrimitive $background={device === 'desktop' ? 'transparent' : theme.colors.gray15}>
         <Container size="small">
-          <Flex gap={16} justify="center" align="end" flex={0}>
+          <Flex
+            direction={device === 'desktop' ? 'column' : 'row'}
+            gap={16}
+            align={device === 'desktop' ? 'start' : 'end'}
+            flex={0}
+          >
             <Button
-              size="small"
-              variant="borderless"
+              size={device === 'desktop' ? 'normal' : 'small'}
+              variant={path === '/home/' ? 'bezeledGray' : 'borderless'}
               color={path === '/home/' ? 'primary' : 'secondary'}
               onClick={() => router.push('/home')}
             >
               <Icon>
                 <HomeIcon />
               </Icon>
+              {device === 'desktop' && 'Inicio'}
             </Button>
 
             <Button
-              size="small"
-              variant="borderless"
+              size={device === 'desktop' ? 'normal' : 'small'}
+              variant={path === '/plugins/' ? 'bezeledGray' : 'borderless'}
               color={path === '/plugins/' ? 'primary' : 'secondary'}
               disabled={true}
-              // onClick={() => router.push('/dashboard')}
+              onClick={() => null}
             >
               <Icon>
                 <BellIcon />
               </Icon>
+              {device === 'desktop' && 'Notificaciones'}
             </Button>
 
-            {!EMERGENCY_LOCK_TRANSFER && (
+            {device !== 'desktop' && (
               <ButtonCTA>
                 <Button onClick={onToggle} variant="bezeledGray">
                   <PlusIcon />
@@ -97,26 +86,37 @@ export default function Subnavbar(props: ComponentProps) {
             )}
 
             <Button
-              size="small"
-              variant="borderless"
+              size={device === 'desktop' ? 'normal' : 'small'}
+              variant={path === '/dashboard/' ? 'bezeledGray' : 'borderless'}
               color={path === '/dashboard/' ? 'primary' : 'secondary'}
               onClick={() => router.push('/dashboard')}
             >
               <Icon>
                 <WalletIcon />
               </Icon>
+              {device === 'desktop' && 'Billetera'}
             </Button>
 
             <Button
-              size="small"
-              variant="borderless"
+              size={device === 'desktop' ? 'normal' : 'small'}
+              variant={path === '/settings/' ? 'bezeledGray' : 'borderless'}
               color={path === '/settings/' ? 'primary' : 'secondary'}
               onClick={() => router.push('/settings')}
             >
               <Icon>
                 <GearIcon />
               </Icon>
+              {device === 'desktop' && 'Ajustes'}
             </Button>
+
+            {device === 'desktop' && (
+              <Button onClick={onToggle}>
+                <Icon>
+                  <PlusIcon />
+                </Icon>
+                Publicar
+              </Button>
+            )}
           </Flex>
         </Container>
       </SubnavbarPrimitive>
@@ -127,9 +127,9 @@ export default function Subnavbar(props: ComponentProps) {
         </ModalHeader>
         <ModalBody>
           <Flex gap={8}>
-            <Avatar>
+            {/* <Avatar>
               <Text size="small">{'DI'}</Text>
-            </Avatar>
+            </Avatar> */}
             <Flex direction="column" gap={8}>
               <Textarea placeholder="¿Qué estás pensando?" />
               {/* <PreviewImage>
@@ -161,6 +161,6 @@ export default function Subnavbar(props: ComponentProps) {
           </Flex>
         </ModalFooter>
       </ModalResponsive>
-    </>
+    </Flex>
   );
 }

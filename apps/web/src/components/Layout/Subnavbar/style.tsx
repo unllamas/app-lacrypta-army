@@ -1,52 +1,33 @@
 import { styled } from 'styled-components';
 
-interface SubnavbarProps {}
-
-export const SubnavbarPrimitive = styled.div<SubnavbarProps>`
+export const SubnavbarPrimitive = styled.div<{
+  $background: string;
+}>`
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
-  /* height: 60px; */
 
   padding: 12px 0 32px 0;
 
-  background-color: ${(props) => props.theme.colors.gray15};
+  background-color: ${(props) => props.$background};
   border-radius: 20px 20px 0 0;
 
   > div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
   }
 
   button {
     flex: 1;
   }
 
-  /* .info {
-    display: flex;
-    justify-content: center;
+  @media screen and (min-width: 1025px) {
+    height: 100%;
 
-    padding: 0 24px;
+    border-radius: 0px;
 
-    > button {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      border: none;
-      background-color: transparent;
-
-      cursor: pointer;
-
-      &.active {
-        svg {
-          color: ${(props) => props.theme.colors.primary};
-        }
-      }
+    button {
+      padding: 0 16px;
     }
-  } */
+  }
 `;
