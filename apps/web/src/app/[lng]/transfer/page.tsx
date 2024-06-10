@@ -149,7 +149,7 @@ export default function Page() {
   return (
     <>
       {/* <Navbar showBackPage={true} title={t('TRANSFER_MONEY')} overrideBack="/dashboard" /> */}
-
+      <Divider y={12} />
       <Container size="small">
         <Flex flex={1} direction="column">
           <InputGroup>

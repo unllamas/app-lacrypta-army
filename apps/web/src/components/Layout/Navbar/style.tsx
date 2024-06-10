@@ -10,6 +10,8 @@ export const Navbar = styled.div<NavbarProps>`
   height: 60px;
   position: relative;
   z-index: 10;
+
+  border-bottom: 1px solid ${(props) => props.theme.colors.gray20};
 `;
 
 export const BackButton = styled.button`

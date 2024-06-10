@@ -3,6 +3,8 @@
 
 // Libraries
 import { useEffect, useMemo, useState } from 'react';
+import { useTheme } from 'styled-components';
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { formatToPreference, normalizeLNDomain, useConfig, useWalletContext } from '@lawallet/react';
 import {
@@ -29,7 +31,7 @@ import {
 } from '@bitcoin-design/bitcoin-icons-react/filled';
 
 // Theme
-import { appTheme } from '@/config/exports';
+// import { appTheme } from '@/config/exports';
 
 // Hooks and utils
 import { extractFirstTwoChars } from '@/utils';
@@ -52,9 +54,11 @@ export default function Page() {
   const config = useConfig();
   const t = useTranslations();
   const lng = useLocale();
+  const router = useRouter();
+  const theme = useTheme();
+
   const [showBanner, setShowBanner] = useState<'backup' | 'none'>('none');
 
-  const router = useRouter();
   const {
     account: { identity, balance, transactions },
     settings: {
@@ -83,7 +87,7 @@ export default function Page() {
       <HeroCard>
         <Divider y={12} />
         <Flex direction="column" align="center" justify="center">
-          <Text size="small" color={appTheme.colors.gray50}>
+          <Text size="small" color={theme.colors.gray50}>
             {t('BALANCE')}
           </Text>
           <Divider y={8} />
@@ -184,7 +188,7 @@ export default function Page() {
         ) : (
           <>
             <Flex justify="space-between" align="center">
-              <Text size="small" color={appTheme.colors.gray50}>
+              <Text size="small" color={theme.colors.gray50}>
                 {t('LAST_ACTIVITY').toUpperCase()}
               </Text>
 
@@ -193,13 +197,20 @@ export default function Page() {
               </Button>
             </Flex>
 
-            <Flex direction="column" gap={4}>
+            <Flex direction="column" gap={4} flex={1}>
               {transactions.slice(0, 5).map((transaction) => (
                 <TransactionItem key={transaction.id} transaction={transaction} />
               ))}
             </Flex>
           </>
         )}
+
+        <Flex justify="center" align="center" gap={4} direction="column">
+          <Text size="small" color={theme.colors.gray50}>
+            Powered by
+          </Text>
+          <Image src="/media/lawallet-logo.png" alt="LaWallet" width={83} height={15} />
+        </Flex>
       </Container>
     </>
   );

@@ -1,9 +1,16 @@
 'use client';
-import Navbar from '@/components/Layout/Navbar';
-import { useLNURLContext } from '@/context/LNURLContext';
+
+// Libraries
 import { useTranslations } from 'next-intl';
-import { useActionOnKeypress } from '@/hooks/useActionOnKeypress';
+import { Divider } from '@lawallet/ui';
 import { TransferTypes } from '@lawallet/react/types';
+
+// Hooks
+import { useLNURLContext } from '@/context/LNURLContext';
+import { useActionOnKeypress } from '@/hooks/useActionOnKeypress';
+
+// Components
+import Navbar from '@/components/Layout/Navbar';
 import { ErrorTransfer } from '../../components/Error';
 import { FinishTransfer } from '../../components/Finish';
 import { Summary } from '../../components/Summary';
@@ -16,6 +23,7 @@ const page = () => {
 
   return (
     <>
+      <Divider y={12} />
       {isSuccess || isError ? (
         <>
           {/* <Navbar /> */}

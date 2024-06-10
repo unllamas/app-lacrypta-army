@@ -1,9 +1,12 @@
+import { useTheme } from 'styled-components';
 import { Text } from '@lawallet/ui';
 
 import { PostImage } from '@/components/PostImage';
 
 export default function FormatPost(props) {
   const { content } = props;
+
+  const theme = useTheme();
 
   function parseContent(inputString) {
     // Expresiones regulares para detectar URLs de webs y de imágenes
@@ -37,7 +40,7 @@ export default function FormatPost(props) {
 
   return (
     <>
-      <Text>{parseContent(content).content}</Text>
+      <Text color={theme.colors.text}>{parseContent(content).content}</Text>
       {parseContent(content).url_image && <PostImage src={parseContent(content).url_image} />}
     </>
   );

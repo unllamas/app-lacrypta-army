@@ -68,6 +68,7 @@ export default function Page() {
   return (
     <>
       {/* <Navbar title={t('SETTINGS')} overrideBack="/dashboard" /> */}
+      <Divider y={12} />
 
       <Container size="small">
         <Text size="small" color={appTheme.colors.gray50}>
